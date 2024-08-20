@@ -266,11 +266,11 @@ h1 {
 .spacer {
   height: 6rem;
 }
-footer{
+footer {
   position: fixed;
   bottom: 0;
   left: 50%;
-  transform: translate(-50%,0);
-  opacity: .5;
+  transform: translate(-50%, 0);
+  opacity: 0.5;
 }
 </style>
