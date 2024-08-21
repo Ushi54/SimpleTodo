@@ -226,7 +226,7 @@ h1 {
   transform: translate(-50%, -50%) !important;
 }
 
-@media (min-width: 600px) and (max-width: 1024px) {
+@media (min-width: 576px) {
   .modal-dialog {
     top: 50%;
     left: 0;
