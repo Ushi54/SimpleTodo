@@ -1,7 +1,10 @@
 <template>
   <div id="app" class="container">
     <h1 class="pt-3"><i class="bi bi-ui-checks"></i> SimpleTodo</h1>
-    <ul class="list-group">
+    <ul
+      class="list-group"
+      :class="isActive && isMobile() ? 'active' : 'nonActive'"
+    >
       <!-- todos配列の各Todoをリスト表示 -->
       <li
         v-for="(todo, index) in todos"
@@ -107,6 +110,8 @@
           class="form-control"
           :placeholder="placeholders"
           ref="todoInput"
+          @focus="addClass"
+          @blur="rmClass"
         />
         <!-- 新しいTodoを追加するための入力フィールド -->
         <!-- v-modelでß新しいTodoの値をバインド -->
@@ -128,7 +133,10 @@ export default {
       showConfirmDeleteModal: false, // 削除確認モーダルの表示状態
       todoToDelete: null, // 削除するTodoのインデックス
       todoToDeleteText: "", // 削除するTodoのテキストを保存
-      placeholders: this.isMobile() ? "Add new todo...( [改行]タップで追加 )" : "Add new todo...", //スマホの場合と、それ以外の場合で出しわけ
+      placeholders: this.isMobile()
+        ? "Add new todo...( [改行]タップで追加 )"
+        : "Add new todo...", //スマホの場合と、それ以外の場合で出しわけ
+      isActive: false, //inputに対するフォーカスの状態を管理
     };
   },
 
@@ -142,7 +150,13 @@ export default {
   },
 
   methods: {
-    isMobile(){
+    addClass() {
+      this.isActive = true;
+    },
+    rmClass() {
+      this.isActive = false;
+    },
+    isMobile() {
       return /Mobi|Android/i.test(navigator.userAgent);
     },
     addTodo() {
@@ -150,11 +164,11 @@ export default {
         // 空でない場合のみ追加
         this.todos.push({ text: this.newTodo, completed: false }); // 新しいTodoを追加
         this.newTodo = ""; // 入力フィールドをクリア
-        this.$refs.todoInput.blur(); //フォーカスをはずす
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth", // スムーズにスクロール
-        });
+        //this.$refs.todoInput.blur(); //フォーカスをはずす
+        //window.scrollTo({
+        //  top: 0,
+        //  behavior: "smooth", // スムーズにスクロール
+        //});
       }
     },
     confirmDelete(index) {
@@ -215,9 +229,16 @@ h1 {
 }
 .list-group {
   margin-top: 5rem;
+  transition: transform 0.5s ease;
 }
 .list-group-item {
   word-break: break-all; /* 単語の折り返し */
+}
+.active {
+  transform: translateY(12rem);
+}
+.nonActive {
+  transform: translateY(0);
 }
 .modal {
   --bs-modal-margin: 0 !important;
