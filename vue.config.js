@@ -3,5 +3,5 @@ module.exports = defineConfig({
   transpileDependencies: true,
 });
 module.exports = {
-  publicPath: process.env.NODE_ENV === "production" ? "/SimpleTodo/" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/06_SimpleTodo/" : "/",
 };

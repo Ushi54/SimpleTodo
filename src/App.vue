@@ -105,7 +105,7 @@
           @keyup.enter="addTodo"
           type="text"
           class="form-control"
-          placeholder="Add new todo..."
+          :placeholder="placeholders"
           ref="todoInput"
         />
         <!-- 新しいTodoを追加するための入力フィールド -->
@@ -128,6 +128,7 @@ export default {
       showConfirmDeleteModal: false, // 削除確認モーダルの表示状態
       todoToDelete: null, // 削除するTodoのインデックス
       todoToDeleteText: "", // 削除するTodoのテキストを保存
+      placeholders: this.isMobile() ? "Add new todo...( [改行]タップで追加 )" : "Add new todo...", //スマホの場合と、それ以外の場合で出しわけ
     };
   },
 
@@ -141,6 +142,9 @@ export default {
   },
 
   methods: {
+    isMobile(){
+      return /Mobi|Android/i.test(navigator.userAgent);
+    },
     addTodo() {
       if (this.newTodo.trim() !== "") {
         // 空でない場合のみ追加
